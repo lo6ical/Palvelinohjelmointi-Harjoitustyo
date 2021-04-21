@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+    <title>GameReleases</title>
+</head>
+<body>
+<div style="padding:20px 0; position: absolute; right: 0; padding-right: 20px;">
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" th:value="#{signout}" class="btn btn-sm btn-danger" />
+    </form>
+</div>
+<div style="position: absolute; padding: 20px;">
+    <span th:text="#{lang.change}"></span>
+    <select id="locales">
+        <option value=""></option>
+        <option value="en" th:text="#{lang.eng}"></option>
+        <option value="fin" th:text="#{lang.fin}"></option>
+    </select>
+</div>
+<br>
+<h1 th:text="#{games}" class="col-md-4" style="margin: auto; text-align: center;"></h1>
+
+<h3 th:text="#{greeting}"></h3>
+<br>
+<div class="col-md-4">
+    <div>
+        <h3 th:text="#{login}" ></h3>
+        <h3 th:inline="text">[[${#httpServletRequest.remoteUser}]]</h3>
+        <br>
+    </div>
+</div>
+
+
+
+
+
+<table class="table table-striped">
+    <tbody>
+    <tr>
+        <th th:text="#{title}"></th>
+        <th th:text="#{publisher}"></th>
+        <th th:text="#{date}"></th>
+        <th th:text="#{genre}"></th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr th:each = "game : ${games}">
+        <td th:text="${game.title}"/>
+        <td th:text="${game.publisher}"/>
+        <td th:text="${game.date}"/>
+        <td th:text="${game.genre.name}"/>
+        <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${game.id})}" th:text="#{delete}" class="btn btn-xs btn-danger"></a></td>
+        <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit/{id}(id=${game.id})}" th:text="#{edit}" class="btn btn-xs btn-danger"></a></td>
+    </tr>
+    </tbody>
+</table>
+<a sec:authorize="hasAuthority('ADMIN')" href="/add" th:text="#{addgame}" style="margin:20px" class="btn btn-success"></a>
+</body>
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#locales").change(function () {
+        var selectedOption = $('#locales').val();
+        if (selectedOption != '') {
+            window.location.replace('?lang=' + selectedOption);
+        }
+    });
+});
+</script>
+</html>

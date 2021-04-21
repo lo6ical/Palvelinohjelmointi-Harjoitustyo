@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Add genre</title>
+</head>
+<body>
+
+<h1>Add genre</h1>
+<form th:object="${genre}" th:action="@{savegenre}" action="#" method="post">
+    <label for="name">Genre</label>
+    <input type="text" id="name" th:field="*{name}"/>
+    <input type="submit" value="Save"></input>
+</form>
+
+
+</body>
+</html>

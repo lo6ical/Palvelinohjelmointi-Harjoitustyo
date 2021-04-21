@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Add game</title>
+</head>
+<body>
+
+<h1>Add game</h1>
+<form th:action="@{/update/{id}(id=${id})}" action="#" method="post" th:object="${game}" >
+    <label for="title">Title</label>
+    <input type="text" th:field="*{title}" id="title" placeholder="Title">
+    <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+    <label for="publisher">Publisher</label>
+    <input type="text" th:field="*{publisher}" id="publisher" placeholder="Publisher">
+    <span th:if="${#fields.hasErrors('publisher')}" th:errors="*{publisher}"></span>
+    <input type="submit" value="Save">
+</form>
+
+
+</body>
+</html>
